@@ -5,15 +5,52 @@ var express         = require("express"),
     app             = express();
 
 // generic configuration
-app.set("view-engine", "ejs");
+app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(methodOverride("_method"));
 mongoose.connect("mongodb://localhost/movie_db");
 
-// INDEX route
+// mongoose configuration
+var movieSchema = new mongoose.Schema({
+  title: String,
+  image: String,
+  summary: String,
+  director: String,
+  year: String
+});
+var Movie = mongoose.model("Movie", movieSchema);
+
 app.get("/", function(req, res) {
-  res.send("INDEX");
+  res.redirect("/movies");
+});
+
+// INDEX route
+app.get("/movies", function(req, res) {
+  Movie.find({}, function(err, movies) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.render("index", { movies: movies });
+    }
+  });
+});
+
+// NEW route
+app.get("/movies/new", function(req, res) {
+  res.render("new");
+});
+
+// CREATE route
+app.post("/movies", function(req, res) {
+  console.log(req);
+  console.log(req.body.movie);
+  Movie.create(req.body.movie, function(err, movie) {
+    if(err) {
+      console.log(err);
+    }
+    res.redirect("/movies");
+  });
 });
 
 // start application
