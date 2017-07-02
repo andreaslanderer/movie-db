@@ -85,6 +85,16 @@ app.put("/movies/:id", function(req, res) {
   });
 });
 
+// DELETE route
+app.delete("/movies/:id", function(req, res) {
+  Movie.findByIdAndRemove(req.params.id, function(err) {
+    if(err) {
+      console.log(err);
+    }
+    res.redirect("/movies");
+  });
+});
+
 // start application
 app.listen("8080", "127.0.0.1", function() {
   console.log("movie-db-server startet successfully on port 8080");
