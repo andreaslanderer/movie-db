@@ -1,0 +1,22 @@
+<% include partials/header %>
+
+<div class="ui main text container segment">
+    <div class="ui huge header"><%= movie.title %></div>
+    <div class="ui top attached">
+        <div class="item">
+            <img src="<%= movie.image %>" class="ui centered rounded image">
+            <div class="meta">
+                <span><strong><%= movie.year %> (<%= movie.director %>)</strong></span>
+            </div>
+            <div class="description">
+                <p><%- movie.summary %></p>
+            </div>
+            <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" class="ui form">
+                <a href="/movies/<%= movie._id %>/edit" class="ui primary button">Edit</a>
+                <input type="Submit" class="ui red button" value="Delete">
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>

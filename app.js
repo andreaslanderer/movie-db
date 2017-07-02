@@ -43,13 +43,23 @@ app.get("/movies/new", function(req, res) {
 
 // CREATE route
 app.post("/movies", function(req, res) {
-  console.log(req);
-  console.log(req.body.movie);
   Movie.create(req.body.movie, function(err, movie) {
     if(err) {
       console.log(err);
     }
     res.redirect("/movies");
+  });
+});
+
+// SHOW route
+app.get("/movies/:id", function(req, res) {
+  Movie.findById(req.params.id, function(err, movie) {
+    if(err) {
+      console.log(err);
+      res.redirect("/movies");
+    } else {
+      res.render("show", { movie : movie });
+    }
   });
 });
 

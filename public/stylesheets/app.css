@@ -1,3 +1,7 @@
 .container.main {
   margin-top: 5em;
 }
+
+.ui.form {
+  margin-top: 1em;
+}

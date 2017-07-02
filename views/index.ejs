@@ -1,13 +1,4 @@
 <% include partials/header %>
-    <!-- menu bar -->
-    <div class="ui fixed inverted menu">
-      <div class="ui container">
-        <div class="header item"><i class="film icon"></i>Movie Database</div>
-        <a href="/" class="item">Home</a>
-        <a href="/movies/new" class="item">New Movie</a>
-      </div>
-    </div>
-
     <!-- content -->
     <div class="ui main text container segment">
       <div class="ui huge header">Movies</div>
@@ -18,7 +9,7 @@
               <img src="<%= movie.image %>">
             </div>
             <div class="content">
-              <a class="header"><%= movie.title %></a>
+              <a href="/movies/<%= movie._id %>" class="header"><%= movie.title %></a>
             </div>
           </div>
         <% }); %>
