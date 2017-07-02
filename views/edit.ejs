@@ -1,0 +1,32 @@
+<% include partials/header %>
+
+<div class="ui main text container segment">
+    <div class="ui huge header">Edit <%= movie.title %></div>
+    <form class="ui form" action="/movies/<%= movie._id %>?_method=PUT" method="POST">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" value="<%= movie.title %>" name="movie[title]">
+        </div>
+        <div class="field">
+            <label>Image</label>
+            <input type="text" value="<%= movie.image %>" name="movie[image]">
+        </div>
+        <div class="field">
+            <label>Summary</label>
+            <textarea name="movie[summary]"><%= movie.summary %></textarea>
+        </div>
+        <div class="field">
+            <label>Director</label>
+            <input type="text" value="<%= movie.director %>" name="movie[director]">
+        </div>
+        <div class="field">
+            <label>Year</label>
+            <input type="text" value="<%= movie.year %>" name="movie[year]">
+        </div>
+        <div class="field">
+            <input type="Submit" class="ui primary button">
+        </div>
+    </form>
+</div>
+
+<% include partials/footer %>

@@ -63,6 +63,28 @@ app.get("/movies/:id", function(req, res) {
   });
 });
 
+// EDIT route
+app.get("/movies/:id/edit", function(req, res) {
+  Movie.findById(req.params.id, function(err, movie) {
+    if(err) {
+      console.log(err);
+      res.redirect("/movies");
+    } else {
+      res.render("edit", { movie : movie });
+    }
+  });
+});
+
+// UPDATE route
+app.put("/movies/:id", function(req, res) {
+  Movie.findByIdAndUpdate(req.params.id, req.body.movie, function(err, movie) {
+    if(err) {
+      console.log(err);
+    }
+    res.redirect("/movies/".concat(req.params.id));
+  });
+});
+
 // start application
 app.listen("8080", "127.0.0.1", function() {
   console.log("movie-db-server startet successfully on port 8080");
