@@ -49,7 +49,7 @@ app.post("/movies", function(req, res) {
 
 // SHOW route
 app.get("/movies/:id", function(req, res) {
-  Movie.findById(req.params.id, function(err, movie) {
+  Movie.findById(req.params.id).populate("actors").exec(function(err, movie) {
     if(err) {
       console.log(err);
       res.redirect("/movies");
