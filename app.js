@@ -3,6 +3,7 @@ var express         = require("express"),
     bodyParser      = require("body-parser"),
     methodOverride  = require("method-override"),
     Movie           = require("./models/movie"),
+    Actor           = require("./models/actor"),
     app             = express();
 
 // generic configuration
@@ -16,20 +17,24 @@ app.get("/", function(req, res) {
   res.redirect("/movies");
 });
 
+/*
+ * MOVIES
+ */
+
 // INDEX route
 app.get("/movies", function(req, res) {
   Movie.find({}, function(err, movies) {
     if(err) {
       console.log(err);
     } else {
-      res.render("index", { movies: movies });
+      res.render("movies/index", { movies: movies });
     }
   });
 });
 
 // NEW route
 app.get("/movies/new", function(req, res) {
-  res.render("new");
+  res.render("movies/new");
 });
 
 // CREATE route
@@ -49,7 +54,7 @@ app.get("/movies/:id", function(req, res) {
       console.log(err);
       res.redirect("/movies");
     } else {
-      res.render("show", { movie : movie });
+      res.render("movies/show", { movie : movie });
     }
   });
 });
@@ -61,7 +66,7 @@ app.get("/movies/:id/edit", function(req, res) {
       console.log(err);
       res.redirect("/movies");
     } else {
-      res.render("edit", { movie : movie });
+      res.render("movies/edit", { movie : movie });
     }
   });
 });
@@ -85,6 +90,40 @@ app.delete("/movies/:id", function(req, res) {
     res.redirect("/movies");
   });
 });
+
+/*
+ * ACTORS
+ */
+ app.get("/movies/:id/actors/new", function(req, res) {
+   var id = req.params.id;
+   Movie.findById(id).populate("actors").exec(function(err, movie) {
+     if(err) {
+       console.log(err);
+       res.redirect("/");
+     } else {
+       res.render("actors/new", { movie: movie });
+     }
+   });
+ });
+
+ app.post("/movies/:id/actors", function(req, res) {
+   Movie.findById(req.params.id, function(err, movie) {
+     if(err) {
+       console.log(err);
+       res.redirect("/");
+     } else {
+       Actor.create(req.body.actor, function(err, actor) {
+         if(err) {
+           console.log(err);
+         } else {
+           movie.actors.push(actor);
+           movie.save();
+         }
+         res.redirect("/movies/".concat(req.params.id));
+       });
+     }
+   });
+ });
 
 // start application
 app.listen("8080", "127.0.0.1", function() {

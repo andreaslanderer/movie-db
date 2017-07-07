@@ -5,7 +5,13 @@ var movieSchema = new mongoose.Schema({
   image: String,
   summary: String,
   director: String,
-  year: String
+  year: String,
+  actors: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Actor"
+    }
+  ]
 });
 
 module.exports = mongoose.model("Movie", movieSchema);

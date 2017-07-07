@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
 <div class="ui main text container segment">
     <div class="ui huge header"><%= movie.title %></div>
@@ -13,10 +13,11 @@
             </div>
             <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" class="ui form">
                 <a href="/movies/<%= movie._id %>/edit" class="ui primary button">Edit</a>
+                <a href="/movies/<%= movie._id %>/actors/new" class="ui button">Add actor</a>
                 <input type="Submit" class="ui red button" value="Delete">
             </form>
         </div>
     </div>
 </div>
 
-<% include partials/footer %>
+<% include ../partials/footer %>
