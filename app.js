@@ -1,7 +1,8 @@
 var express         = require("express"),
     mongoose        = require("mongoose"),
-    bodyParser     = require("body-parser"),
-    methodOverride = require("method-override"),
+    bodyParser      = require("body-parser"),
+    methodOverride  = require("method-override"),
+    Movie           = require("./models/movie"),
     app             = express();
 
 // generic configuration
@@ -10,16 +11,6 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(methodOverride("_method"));
 mongoose.connect("mongodb://localhost/movie_db");
-
-// mongoose configuration
-var movieSchema = new mongoose.Schema({
-  title: String,
-  image: String,
-  summary: String,
-  director: String,
-  year: String
-});
-var Movie = mongoose.model("Movie", movieSchema);
 
 app.get("/", function(req, res) {
   res.redirect("/movies");
