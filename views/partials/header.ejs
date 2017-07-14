@@ -12,4 +12,12 @@
         <a href="/" class="item">Home</a>
         <a href="/movies/new" class="item">New Movie</a>
       </div>
+      <div class="right menu">
+        <% if(!currentUser) { %>
+        <a href="/register" class="item">Login</a>
+        <% } else { %>
+        <span class="item"><%= currentUser.name %></span>
+        <a href="/logout" class="item">Logout</a>
+        <% } %>
+      </div>
     </div>

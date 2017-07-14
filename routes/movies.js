@@ -1,6 +1,7 @@
-var express = require("express"),
-    router  = express.Router(),
-    Movie   = require("../models/movie");
+var express             = require("express"),
+    router              = express.Router(),
+    Movie               = require("../models/movie"),
+    ensureAuthenticated = require("./ensureAuthenticated");
 
 // INDEX route
 router.get("/", function(req, res) {
@@ -14,12 +15,12 @@ router.get("/", function(req, res) {
 });
 
 // NEW route
-router.get("/new", function(req, res) {
+router.get("/new", ensureAuthenticated, function(req, res) {
   res.render("movies/new");
 });
 
 // CREATE route
-router.post("/", function(req, res) {
+router.post("/", ensureAuthenticated, function(req, res) {
   Movie.create(req.body.movie, function(err, movie) {
     if(err) {
       console.log(err);
@@ -41,7 +42,7 @@ router.get("/:id", function(req, res) {
 });
 
 // EDIT route
-router.get("/:id/edit", function(req, res) {
+router.get("/:id/edit", ensureAuthenticated, function(req, res) {
   Movie.findById(req.params.id, function(err, movie) {
     if(err) {
       console.log(err);
@@ -53,7 +54,7 @@ router.get("/:id/edit", function(req, res) {
 });
 
 // UPDATE route
-router.put("/:id", function(req, res) {
+router.put("/:id", ensureAuthenticated, function(req, res) {
   Movie.findByIdAndUpdate(req.params.id, req.body.movie, function(err, movie) {
     if(err) {
       console.log(err);
@@ -63,7 +64,7 @@ router.put("/:id", function(req, res) {
 });
 
 // DELETE route
-router.delete("/:id", function(req, res) {
+router.delete("/:id", ensureAuthenticated, function(req, res) {
   Movie.findByIdAndRemove(req.params.id, function(err) {
     if(err) {
       console.log(err);
