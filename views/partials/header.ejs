@@ -16,7 +16,7 @@
         <% if(!currentUser) { %>
         <a href="/register" class="item">Login</a>
         <% } else { %>
-        <span class="item"><%= currentUser.name %></span>
+        <a href="" class="item"><i class="address card icon"></i><%= currentUser.name %></a>
         <a href="/logout" class="item">Logout</a>
         <% } %>
       </div>
