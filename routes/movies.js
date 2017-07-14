@@ -24,6 +24,11 @@ router.post("/", ensureAuthenticated, function(req, res) {
   Movie.create(req.body.movie, function(err, movie) {
     if(err) {
       console.log(err);
+    } else {
+      var user = req.user;
+      movie.createdBy.id = user._id;
+      movie.createdBy.username = user.name;
+      movie.save();
     }
     res.redirect("/movies");
   });

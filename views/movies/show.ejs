@@ -5,29 +5,34 @@
     <div class="ui top attached">
         <div class="item">
             <img src="<%= movie.image %>" class="ui centered rounded image">
-            <div class="meta">
-                <span><strong><%= movie.year %> (<%= movie.director %>)</strong></span>
-            </div>
-            <div class="description">
-                <p><%- movie.summary %></p>
-            </div>
-            <div class="ui items">
-              <% movie.actors.forEach(function(actor) { %>
-              <div class="ui item">
-                <div class="ui tiny image">
-                  <img src="<%= actor.image %>">
-                </div>
-                <div class="middle aligned content">
-                  <%= actor.firstName + " " + actor.lastName %>
-                </div>
+            <div class="content">
+              <div class="header">
+                  <span><strong><%= movie.year %> (<%= movie.director %>)</strong></span>
               </div>
-              <% }); %>
+              <div class="meta">
+                  Created by <%= movie.createdBy.username %>
+              </div>
+              <div class="description">
+                  <p><%- movie.summary %></p>
+              </div>
+              <div class="ui items">
+                <% movie.actors.forEach(function(actor) { %>
+                <div class="ui item">
+                  <div class="ui tiny image">
+                    <img src="<%= actor.image %>">
+                  </div>
+                  <div class="middle aligned content">
+                    <%= actor.firstName + " " + actor.lastName %>
+                  </div>
+                </div>
+                <% }); %>
+              </div>
+              <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" class="ui form">
+                  <a href="/movies/<%= movie._id %>/edit" class="ui primary button">Edit</a>
+                  <a href="/movies/<%= movie._id %>/actors/new" class="ui button">Add actor</a>
+                  <input type="Submit" class="ui red button" value="Delete">
+              </form>
             </div>
-            <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" class="ui form">
-                <a href="/movies/<%= movie._id %>/edit" class="ui primary button">Edit</a>
-                <a href="/movies/<%= movie._id %>/actors/new" class="ui button">Add actor</a>
-                <input type="Submit" class="ui red button" value="Delete">
-            </form>
         </div>
     </div>
 </div>
