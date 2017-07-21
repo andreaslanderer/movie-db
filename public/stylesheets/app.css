@@ -5,3 +5,7 @@
 .ui.form {
   margin-top: 1em;
 }
+
+.ui.message.flash {
+  margin-top: 60px;
+}

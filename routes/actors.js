@@ -28,6 +28,7 @@ var express     = require("express"),
          } else {
            movie.actors.push(actor);
            movie.save();
+           req.flash("success", "New actor/actress has been successfully added!");
          }
          res.redirect("/movies/".concat(req.params.id));
        });

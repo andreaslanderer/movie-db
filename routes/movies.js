@@ -24,12 +24,14 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
   Movie.create(req.body.movie, function(err, movie) {
     if(err) {
       console.log(err);
+      req.flash("error", "Movie could not be created!");
     } else {
       var user = req.user;
       movie.createdBy.userId = user._id;
       movie.createdBy.username = user.name;
       movie.save();
     }
+    req.flash("success", "New movie has been successfully created!");
     res.redirect("/movies");
   });
 });
@@ -64,6 +66,7 @@ router.put("/:id", middleware.isOwnerOfMovie, function(req, res) {
     if(err) {
       console.log(err);
     }
+    req.flash("success", "The movie has been successfully updated!")
     res.redirect("/movies/".concat(req.params.id));
   });
 });
@@ -74,6 +77,7 @@ router.delete("/:id", middleware.isOwnerOfMovie, function(req, res) {
     if(err) {
       console.log(err);
     }
+    req.flash("success", "The movie has been successfully deleted!")
     res.redirect("/movies");
   });
 });
