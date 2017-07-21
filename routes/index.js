@@ -8,6 +8,7 @@ router.get("/", function(req, res) {
 });
 
 router.get("/register", passport.authenticate("facebook"), function(req, res) {
+  req.flash("success", "Welcome " + req.user.name + "! Have a nice day!");
   res.redirect("/movies");
 });
 
