@@ -10,7 +10,9 @@
       <div class="ui container">
         <div class="header item"><i class="film icon"></i>Movie Database</div>
         <a href="/" class="item">Home</a>
-        <a href="/movies/new" class="item">New Movie</a>
+        <% if(currentUser) { %>
+          <a href="/movies/new" class="item">New Movie</a>
+        <% } %>
       </div>
       <div class="right menu">
         <% if(!currentUser) { %>

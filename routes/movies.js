@@ -1,7 +1,7 @@
-var express             = require("express"),
-    router              = express.Router(),
-    Movie               = require("../models/movie"),
-    ensureAuthenticated = require("./ensureAuthenticated");
+var express     = require("express"),
+    router      = express.Router(),
+    Movie       = require("../models/movie"),
+    middleware  = require("../middleware");
 
 // INDEX route
 router.get("/", function(req, res) {
@@ -15,18 +15,18 @@ router.get("/", function(req, res) {
 });
 
 // NEW route
-router.get("/new", ensureAuthenticated, function(req, res) {
+router.get("/new", middleware.isLoggedIn, function(req, res) {
   res.render("movies/new");
 });
 
 // CREATE route
-router.post("/", ensureAuthenticated, function(req, res) {
+router.post("/", middleware.isLoggedIn, function(req, res) {
   Movie.create(req.body.movie, function(err, movie) {
     if(err) {
       console.log(err);
     } else {
       var user = req.user;
-      movie.createdBy.id = user._id;
+      movie.createdBy.userId = user._id;
       movie.createdBy.username = user.name;
       movie.save();
     }
@@ -47,7 +47,7 @@ router.get("/:id", function(req, res) {
 });
 
 // EDIT route
-router.get("/:id/edit", ensureAuthenticated, function(req, res) {
+router.get("/:id/edit", middleware.isOwnerOfMovie, function(req, res) {
   Movie.findById(req.params.id, function(err, movie) {
     if(err) {
       console.log(err);
@@ -59,7 +59,7 @@ router.get("/:id/edit", ensureAuthenticated, function(req, res) {
 });
 
 // UPDATE route
-router.put("/:id", ensureAuthenticated, function(req, res) {
+router.put("/:id", middleware.isOwnerOfMovie, function(req, res) {
   Movie.findByIdAndUpdate(req.params.id, req.body.movie, function(err, movie) {
     if(err) {
       console.log(err);
@@ -69,7 +69,7 @@ router.put("/:id", ensureAuthenticated, function(req, res) {
 });
 
 // DELETE route
-router.delete("/:id", ensureAuthenticated, function(req, res) {
+router.delete("/:id", middleware.isOwnerOfMovie, function(req, res) {
   Movie.findByIdAndRemove(req.params.id, function(err) {
     if(err) {
       console.log(err);

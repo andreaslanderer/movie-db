@@ -28,9 +28,11 @@
                 <% }); %>
               </div>
               <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST" class="ui form">
-                  <a href="/movies/<%= movie._id %>/edit" class="ui primary button">Edit</a>
-                  <a href="/movies/<%= movie._id %>/actors/new" class="ui button">Add actor</a>
-                  <input type="Submit" class="ui red button" value="Delete">
+                <% if(currentUser && movie.createdBy.userId.equals(currentUser._id)) { %>
+                    <a href="/movies/<%= movie._id %>/edit" class="ui primary button">Edit</a>
+                    <a href="/movies/<%= movie._id %>/actors/new" class="ui button">Add actor</a>
+                    <input type="Submit" class="ui red button" value="Delete">
+                  <% } %>
               </form>
             </div>
         </div>

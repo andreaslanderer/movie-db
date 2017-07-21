@@ -1,10 +1,10 @@
-var express             = require("express"),
-    router              = express.Router({ mergeParams : true }),
-    Movie               = require("../models/movie"),
-    ensureAuthenticated = require("./ensureAuthenticated");
-    Actor               = require("../models/actor");
+var express     = require("express"),
+    router      = express.Router({ mergeParams : true }),
+    Movie       = require("../models/movie"),
+    middleware  = require("../middleware");
+    Actor       = require("../models/actor");
 
- router.get("/new", ensureAuthenticated, function(req, res) {
+ router.get("/new", middleware.isOwnerOfMovie, function(req, res) {
    var id = req.params.id;
    Movie.findById(id).populate("actors").exec(function(err, movie) {
      if(err) {
@@ -16,7 +16,7 @@ var express             = require("express"),
    });
  });
 
- router.post("/", ensureAuthenticated, function(req, res) {
+ router.post("/", middleware.isOwnerOfMovie, function(req, res) {
    Movie.findById(req.params.id, function(err, movie) {
      if(err) {
        console.log(err);
