@@ -49,6 +49,6 @@ app.use("/movies", movieRoutes);
 app.use("/movies/:id/actors", actorRoutes);
 
 // start application
-app.listen("8080", "127.0.0.1", function() {
+app.listen(process.env.PORT, process.env.IP, function() {
   console.log("movie-db-server startet successfully on port 8080");
 });
