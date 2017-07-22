@@ -17,7 +17,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(methodOverride("_method"));
 app.use(flash());
-mongoose.connect("mongodb://localhost/movie_db");
+mongoose.connect(process.env.MONGO_MOVIEDB);
 
 // passport and express session configuration
 passport.serializeUser(function(user, callback) {
