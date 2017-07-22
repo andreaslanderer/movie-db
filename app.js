@@ -50,5 +50,5 @@ app.use("/movies/:id/actors", actorRoutes);
 
 // start application
 app.listen(process.env.PORT, process.env.IP, function() {
-  console.log("movie-db-server startet successfully on port" + process.env.PORT);
+  console.log("movie-db-server startet successfully on  " + process.env.IP + ":" + process.env.PORT);
 });
